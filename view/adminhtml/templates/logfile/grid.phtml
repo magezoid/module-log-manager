@@ -1,0 +1,146 @@
+<?php
+/**
+ * LICENSE NOTICE
+ *
+ * This file is part of the Magezoid extension package.
+ * Usage is governed by the Magezoid proprietary license agreement:
+ * 
+ *
+ * DISCLAIMER
+ *
+ * Any modifications to this file may be overwritten during future upgrades.
+ * Please extend or override functionality via Magento's customization standards.
+ *
+ *
+ * @category    Magezoid
+ * @package     Magezoid_LogManager
+ * @copyright   Copyright (c) Magezoid
+ */
+
+// phpcs:disable Generic.Files.LineLength.TooLong
+use Magezoid\LogManager\Block\LogFile;
+use Magento\Framework\Escaper;
+
+/**
+ * @var LogFile $block
+ * @var Escaper $escaper
+ */
+$logs = $block->getLogFiles();
+$items = $logs['items'];
+$totalItems = $logs['total'];
+$page = $logs['page'];
+$totalPages = $logs['totalPages'];
+$search = $logs['search'];
+$sort = $logs['sort'];
+$dir = $logs['dir'];
+$nextDir = ($dir === 'asc') ? 'desc' : 'asc';
+?>
+<div class="admin__data-grid-wrap logviewer-grid">
+    <div class="search-filename">
+        <form method="get" action="#">
+            <input type="text" name="q"
+                   placeholder="<?= $escaper->escapeHtmlAttr('Enter any file name...') ?>"
+                   value="<?= $escaper->escapeHtmlAttr($search) ?>">
+            <button type="submit"><?= $escaper->escapeHtml(__('Search')) ?></button>
+        </form>
+    </div>
+    <form method="post" action="<?= $escaper->escapeHtmlAttr($block->getBulkDeleteUrl()) ?>">
+        <?= $block->getBlockHtml('formkey') ?>
+        <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 10px;">
+            <div class="bulk-actions">
+                <button type="submit" class="action-delete">
+                    <?= $escaper->escapeHtml(__('Delete Selected')) ?>
+                </button>
+            </div>
+            <div class="log-count">
+                <?= $escaper->escapeHtml(__('%1 records found', $totalItems)) ?>
+            </div>
+        </div>
+
+
+        <table class="data-grid">
+            <thead>
+                <tr>
+                    <th class="data-grid-th">
+                        <input type="checkbox" id="select-all-files"
+                               title="<?= $escaper->escapeHtml(__('Select All')) ?>" />
+                    </th>
+                    <th class="data-grid-th">
+                        <a href="<?= $escaper->escapeHtmlAttr($block->getUrl('*/*/*', ['sort' => 'name', 'dir' => ($sort === 'name' && $dir === 'asc') ? 'desc' : 'asc', 'q' => $search])) ?>">
+                            <?= $escaper->escapeHtml(__('File Name')) ?>
+                            <span class="sort-indicator <?= ($sort === 'name') ? ($dir === 'asc' ? 'asc' : 'desc') : '' ?>"></span>
+                        </a>
+                    </th>
+                    <th class="data-grid-th">
+                        <a href="<?= $escaper->escapeHtmlAttr($block->getUrl('*/*/*', ['sort' => 'size', 'dir' => ($sort === 'size' && $dir === 'asc') ? 'desc' : 'asc', 'q' => $search])) ?>">
+                            <?= $escaper->escapeHtml(__('Size')) ?>
+                            <span class="sort-indicator <?= ($sort === 'size') ? ($dir === 'asc' ? 'asc' : 'desc') : '' ?>"></span>
+                        </a>
+                    </th>
+                    <th class="data-grid-th">
+                        <a href="<?= $escaper->escapeHtmlAttr($block->getUrl('*/*/*', ['sort' => 'mod_time', 'dir' => ($sort === 'mod_time' && $dir === 'asc') ? 'desc' : 'asc', 'q' => $search])) ?>">
+                            <?= $escaper->escapeHtml(__('Last Updated')) ?>
+                            <span class="sort-indicator <?= ($sort === 'mod_time') ? ($dir === 'asc' ? 'asc' : 'desc') : '' ?>"></span>
+                        </a>
+                    </th>
+                    <th class="data-grid-th"><?= $escaper->escapeHtml(__('Actions')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (count($items) > 0): ?>
+                    <?php $i = 0; foreach ($items as $log): ?>
+                        <?php $fileName = $log['name']; ?>
+                        <tr class="<?= $i % 2 === 0 ? '_odd-row' : '' ?>">
+                            <td>
+                                <input type="checkbox" name="files[]" value="<?= $log['name']; ?>" class="select-file" />
+                            </td>
+                            <td><?= $escaper->escapeHtml($fileName) ?></td>
+                            <td><?= $escaper->escapeHtml($log['size_readable']) ?></td>
+                            <td>
+                                <?php $time = rtrim($log['mod_time_full'], '.') ?>
+                                <?= $escaper->escapeHtml($time) ?>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="<?= $escaper->escapeHtmlAttr($block->getViewLogFileUrl($fileName)) ?>" class="action-primary">
+                                        <?= $escaper->escapeHtml(__('View')) ?>
+                                    </a>
+                                    <?php if ($block->isDownloadAllowed()): ?>
+                                        <a href="<?= $escaper->escapeHtmlAttr($block->getDownloadLogFileUrl($fileName)) ?>" class="action-secondary">
+                                            <?= $escaper->escapeHtml(__('Download')) ?>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5"><?= $escaper->escapeHtml(__("We couldn't find any records.")) ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </form>
+
+    <?php if ($block->showPagination($logs)): ?>
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="<?= $escaper->escapeHtmlAttr($block->getUrl('*/*/*', ['page' => $i, 'q' => $search, 'sort' => $sort, 'dir' => $dir])) ?>"
+                   class="<?= ($i == $page) ? 'active' : '' ?>">
+                    <?= $escaper->escapeHtml($i) ?>
+                </a>
+            <?php endfor; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+<script>
+require(['jquery'], function($){
+    $('#select-all-files').on('click', function() {
+        $('.select-file').prop('checked', this.checked);
+    });
+});
+</script>

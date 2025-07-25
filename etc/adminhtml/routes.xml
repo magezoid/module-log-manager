@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LICENSE NOTICE
+ *
+ * This file is part of the Magezoid extension package.
+ * Usage is governed by the Magezoid proprietary license agreement:
+ * 
+ *
+ * DISCLAIMER
+ *
+ * Any modifications to this file may be overwritten during future upgrades.
+ * Please extend or override functionality via Magento's customization standards.
+ *
+ *
+ * @category    Magezoid
+ * @package     Magezoid_LogManager
+ * @copyright   Copyright (c) Magezoid
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+   	<router id="admin">
+      	<route id="logviewer" frontName="logviewer">
+        	<module name="Magezoid_LogManager" before="Magento_Backend" />
+      	</route>
+   	</router>
+</config>

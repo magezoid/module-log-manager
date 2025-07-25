@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LICENSE NOTICE
+ *
+ * This file is part of the Magezoid extension package.
+ * Usage is governed by the Magezoid proprietary license agreement:
+ * 
+ *
+ * DISCLAIMER
+ *
+ * Any modifications to this file may be overwritten during future upgrades.
+ * Please extend or override functionality via Magento's customization standards.
+ *
+ *
+ * @category    Magezoid
+ * @package     Magezoid_LogManager
+ * @copyright   Copyright (c) Magezoid
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magezoid_LogManager::main_menu"
+             title="Log Manager"
+             module="Magezoid_LogManager"
+             sortOrder="40"
+             resource="Magezoid_LogManager::main_menu"/>
+
+        <add id="Magezoid_LogManager::orders_log"
+             title="View Logs"
+             module="Magezoid_LogManager"
+             sortOrder="10"
+             parent="Magezoid_LogManager::main_menu"
+             action="logviewer/logfile/index"
+             resource="Magezoid_LogManager::log_viewer_view"/>
+
+        <add id="Magezoid_LogManager::config"
+             title="Configuration"
+             module="Magezoid_LogManager"
+             sortOrder="20"
+             parent="Magezoid_LogManager::main_menu"
+             action="adminhtml/system_config/edit/section/log_viewer"
+             resource="Magezoid_LogManager::config"/>
+    </menu>
+</config>

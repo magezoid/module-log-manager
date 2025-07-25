@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LICENSE NOTICE
+ *
+ * This file is part of the Magezoid extension package.
+ * Usage is governed by the Magezoid proprietary license agreement:
+ * 
+ *
+ * DISCLAIMER
+ *
+ * Any modifications to this file may be overwritten during future upgrades.
+ * Please extend or override functionality via Magento's customization standards.
+ *
+ *
+ * @category    Magezoid
+ * @package     Magezoid_LogManager
+ * @copyright   Copyright (c) Magezoid
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magezoid_LogManager::css/styles.css" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magezoid\LogManager\Block\LogFile" name="magezoid.logmanager.view" template="Magezoid_LogManager::logfile/view.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

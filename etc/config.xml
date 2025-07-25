@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * LICENSE NOTICE
+ *
+ * This file is part of the Magezoid extension package.
+ * Usage is governed by the Magezoid proprietary license agreement:
+ * 
+ *
+ * DISCLAIMER
+ *
+ * Any modifications to this file may be overwritten during future upgrades.
+ * Please extend or override functionality via Magento's customization standards.
+ *
+ *
+ * @category    Magezoid
+ * @package     Magezoid_LogManager
+ * @copyright   Copyright (c) Magezoid
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <log_viewer>
+            <general>
+                <enable>1</enable>
+                <lines_to_show>500</lines_to_show>
+                <items_per_page>10</items_per_page>
+                <default_sort_column>mod_time</default_sort_column>
+                <default_sort_dir>desc</default_sort_dir>
+                <allow_delete>1</allow_delete>
+                <allow_download>1</allow_download>
+            </general>
+        </log_viewer>
+    </default>
+</config>

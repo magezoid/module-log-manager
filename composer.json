@@ -1,0 +1,21 @@
+{
+    "name": "magezoid/module-log-manager",
+    "description": "Magento 2 Log Manager Extension",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Bhupendra Singh",
+            "email": "singh.bhupendra25041@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magezoid\\LogManager\\": ""
+        }
+    }
+}
