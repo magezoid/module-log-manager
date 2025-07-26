@@ -4,7 +4,7 @@
  *
  * This file is part of the Magezoid extension package.
  * Usage is governed by the Magezoid proprietary license agreement:
- * 
+ *
  *
  * DISCLAIMER
  *
@@ -78,15 +78,14 @@ class LogFile extends Template
     }
 
     /**
-     * Retrieve selected log file url to delete
+     * Retrieve bulk delete URL for selected log files.
+     *
      * @return string
      */
-
     public function getBulkDeleteUrl()
     {
         return $this->getUrl('logviewer/logfile/bulkDelete');
     }
-
 
     /**
      * Retrieve load previous log url
